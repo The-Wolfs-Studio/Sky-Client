@@ -3,10 +3,11 @@ package net.minecraft.src;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.Namenotfound128.Sky.*;
+import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.EaglerAdapter;
 import net.lax1dude.eaglercraft.TextureLocation;
 import net.lax1dude.eaglercraft.adapter.Tessellator;
-import net.minecraft.client.Minecraft;
 
 public class GuiScreen extends Gui {
 	public static final boolean isMacOs = Minecraft.getOs() == EnumOS.MACOS;
@@ -25,7 +26,7 @@ public class GuiScreen extends Gui {
 	public boolean allowUserInput = false;
 
 	/** The FontRenderer used by GuiScreen */
-	protected FontRenderer fontRenderer;
+	public FontRenderer fontRenderer;
 	public GuiParticle guiParticles;
 
 	/** The button that was just pressed. */
@@ -156,6 +157,8 @@ public class GuiScreen extends Gui {
 		int var1 = EaglerAdapter.mouseGetEventX() * this.width / this.mc.displayWidth;
 		int var2 = this.height - EaglerAdapter.mouseGetEventY() * this.height / this.mc.displayHeight - 1;
 
+		if(this instanceof GuiContainer)TMI.instance.controller.handleScrollWheel(var1, var2);
+
 		if (EaglerAdapter.mouseGetEventButtonState()) {
 			if (this.mc.gameSettings.touchscreen && this.field_92018_d++ > 0) {
 				return;
@@ -264,9 +267,5 @@ public class GuiScreen extends Gui {
 
 	public static boolean isShiftKeyDown() {
 		return EaglerAdapter.isKeyDown(42) || EaglerAdapter.isKeyDown(54);
-	}
-	
-	public boolean blockHotKeys() {
-		return false;
 	}
 }
